@@ -17,6 +17,18 @@ Goat Bot V2 is a Facebook Messenger chat bot built using the `neokex-fca` (unoff
 
 ## Recent Changes
 
+### Docker Deployment Support (November 16, 2025)
+- **Added Docker deployment support for Render/Railway:**
+  - Created production-ready `Dockerfile` with Node.js 20, minimal dependencies for native modules (canvas, sqlite3)
+  - Created `start.sh` startup script that validates required config files before launching
+  - Created `.dockerignore` to exclude dev files, node_modules, and sensitive data from builds
+  - Created comprehensive `DEPLOYMENT.md` guide with instructions for Render and Railway deployment
+  - **Fixed configuration loading bug in Goat.js:** Changed environment detection logic from `['production', 'development'].includes(NODE_ENV)` to `NODE_ENV === 'development'`
+    - Previously, both production AND development environments incorrectly loaded `.dev` files
+    - Now only development environment loads `.dev` files (config.dev.json, account.dev.txt)
+    - Production correctly uses standard files (config.json, account.txt, configCommands.json)
+  - Security: Documentation emphasizes using platform secret management for credentials instead of committing sensitive files
+
 ### Bug Fixes (November 16, 2025)
 - **Fixed Accept Command Compatibility with neokex-fca:**
   - Modified `node_modules/neokex-fca/src/apis/httpPost.js` to ensure consistent string responses
